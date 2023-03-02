@@ -21,7 +21,7 @@
 			reader.on("SamplesAcquired", (e) => {
 				console.log(e)
 				const image = new Image()
-				const sample = e.sample[0]
+				const sample = e.samples[0]
 				image.src = `data:image/png:${sample}`
 				outputContainer.appendChild(image)
 			})
