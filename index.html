@@ -8,16 +8,22 @@
 	</head>
 	<body>
 		<button>Click Me</button>
+
+		<div class="fingerprints-container"></div>
 		<script src="./public/module/sdk.js"></script>
 		<script src="./public/module/core.js"></script>
 		<script src="./public/module/devices.js"></script>
 		<script>
 			const reader = new dp.devices.FingerprintReader()
-			console.log(dp.devices.SampleFormat.PngImage)
+			const outputContainer = document.querySelector(".fingerprints-container")
 			const button = document.querySelector("button")
 
 			reader.on("SamplesAcquired", (e) => {
 				console.log(e)
+				const image = new Image()
+				const sample = e.sample[0]
+				image.src = `data:image/png:${sample}`
+				outputContainer.appendChild(image)
 			})
 
 			reader.on("DeviceConnected", (e) => {
