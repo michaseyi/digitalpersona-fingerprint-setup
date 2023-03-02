@@ -13,16 +13,39 @@
 		<script src="./public/module/devices.js"></script>
 		<script>
 			const reader = new dp.devices.FingerprintReader()
+			console.log(dp.devices.SampleFormat.PngImage)
 			const button = document.querySelector("button")
 
-			console.log(dp)
-			button.addEventListener("click", (e) => {
-				reader.enumerateDevices().then((device) => {
-					console.log(device)
-				})
+			reader.on("SamplesAcquired", (e) => {
+				console.log(e)
 			})
 
-			console.log(reader)
+			reader.on("DeviceConnected", (e) => {
+				console.log(e)
+			})
+			async function wait(duration) {
+				return new Promise((resolve) => {
+					setTimeout(() => resolve(), duration * 1000)
+				})
+			}
+
+			button.addEventListener("click", async (e) => {
+				const devices = await reader.enumerateDevices()
+
+				if (devices.length === 0) {
+					throw new Error("No fingerprint reader is connected")
+				}
+
+				const deviceUid = devices[0]
+
+				console.log("starting fingerprint acquisition")
+				await reader.startAcquisition(dp.devices.SampleFormat.PngImage, deviceUid)
+
+				await wait(2)
+
+				console.log("stoping fingerprint acquisition")
+				await reader.stopAcquisition(deviceUid)
+			})
 		</script>
 	</body>
 </html>
