@@ -22,7 +22,8 @@
 				console.log(e)
 				const image = new Image()
 				const sample = e.samples[0]
-				image.src = `data:image/png;base64,${sample}`
+				console.log(sample)
+				image.src = "data:image/png;base64," + sample
 				outputContainer.appendChild(image)
 			})
 
