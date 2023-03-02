@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<button>Click Me</button>
+		<script src="./public/module/sdk.js"></script>
+		<script src="./public/module/core.js"></script>
+		<script src="./public/module/devices.js"></script>
+		<script>
+			const reader = new dp.devices.FingerprintReader()
+			const button = document.querySelector("button")
+
+			console.log(dp)
+			button.addEventListener("click", (e) => {
+				reader.enumerateDevices().then((device) => {
+					console.log(device)
+				})
+			})
+
+			console.log(reader)
+		</script>
+	</body>
+</html>
